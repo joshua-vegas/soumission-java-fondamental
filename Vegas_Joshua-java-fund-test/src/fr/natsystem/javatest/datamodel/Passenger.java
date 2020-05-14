@@ -16,6 +16,7 @@ public class Passenger {
 		this.survived = survived;
 	}
 	
+
 	public String getName() {
 		return name;
 	}

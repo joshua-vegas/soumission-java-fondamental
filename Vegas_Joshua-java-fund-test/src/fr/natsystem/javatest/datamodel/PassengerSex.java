@@ -2,8 +2,8 @@ package fr.natsystem.javatest.datamodel;
 
 public enum PassengerSex {
 
-	MALE("M"),
-	FEMALE("F")
+	MALE("Male"),
+	FEMALE("Female")
 	;
 	
 	private String code;
