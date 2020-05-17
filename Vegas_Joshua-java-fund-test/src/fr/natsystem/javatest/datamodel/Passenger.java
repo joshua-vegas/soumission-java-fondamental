@@ -43,7 +43,7 @@ public class Passenger implements Comparable<Passenger> {
 	
 	@Override
 	public String toString() {
-		return "Passenger [name=" + name + ", age : "+ age + ", survived =" + survived +"]";
+		return "Passenger [name=" + name + ", survived =" + survived +"]";
 	}
 
 	@Override
