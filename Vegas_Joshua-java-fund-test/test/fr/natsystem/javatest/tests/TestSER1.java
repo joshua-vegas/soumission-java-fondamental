@@ -11,10 +11,10 @@ import fr.natsystem.javatest.services.data.PassengerCsvHandler;
 public class TestSER1 {
 
 	public static void test() {
-		//given : Un fichier contenant des lignes au format csv qui se trouve à la racine du projet eclipse
+		//given : Un fichier contenant des lignes au format csv qui se trouve à la racine du projet
 		File file = new File("Titanic.csv");
 		
-		//when
+		//when : Lecture du fichier CSV Titanic avec tout les passagers.
 		
 		List<Passenger> passengers;
 		try {
@@ -25,11 +25,12 @@ public class TestSER1 {
 			return;
 		}
 			
-		//then
-		System.out.println(passengers);
+		//then : Affichage du second passager.
+		System.out.println(passengers.get(1));
 		
-		boolean success = passengers.size() == 1314;
-		
+		// Test complémentaire permettant de vérifier si le fichier à bien été chargé.
+		// 1313 étant le nombre de lignes compris dans le fichier Titanic.csv moins l'entête.
+		boolean success = passengers.size() == 1313;
 		
 		if (!success) {
 			System.out.println("une erreur est survenue pendant le chargement");

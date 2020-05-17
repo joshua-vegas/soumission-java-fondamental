@@ -11,13 +11,14 @@ import java.util.List;
 import fr.natsystem.javatest.datamodel.Passenger;
 import fr.natsystem.javatest.datamodel.PassengerClass;
 import fr.natsystem.javatest.datamodel.PassengerSex;
+import fr.natsystem.javatest.services.DataFileLoadingException;
 
 
 
 public class PassengerCsvHandler {
 	
 	// Récupération de la liste des passagers à partir d'un fichier csv 
-	public static List<Passenger> readPassengersFromCSVFile(File file) throws Exception {
+	public static List<Passenger> readPassengersFromCSVFile(File file) throws DataFileLoadingException {
 		List<String> lines = null;
 		try {
 			lines = Files.readAllLines(file.toPath());
@@ -29,7 +30,7 @@ public class PassengerCsvHandler {
 			if (e instanceof NoSuchFileException) {
 				detail = "le fichier n'a pas été trouvé";
 			}
-			throw new Exception("Le fichier contenant les passagers n'a pas pu être chargé correctement "
+			throw new DataFileLoadingException("Le fichier contenant les passagers n'a pas pu être chargé correctement "
 					+ "(fichier en cause :" + file.getAbsolutePath() + ")"
 					+ "\ndétail de l'erreur :" + detail , e);
 		}
@@ -46,22 +47,23 @@ public class PassengerCsvHandler {
 	}
 	
 
+	// Méthode permettant de créer des objets passenger à partir des informations présentes dans les lignes d'un fichier. 
 	public static Passenger fromCSVLine(String line) {
-		String[] parts = line.split(",");
-		String[] parts1 = line.split(";");
+		String[] parts = line.split(";");
+		Passenger passenger = new Passenger();
 					
-		String name = parts[0].strip() + parts[1].strip();
-		PassengerClass passengerClass = PassengerClass.resolveFromCode(parts1[1].strip());
+		passenger.setName(parts[0].strip());
+		passenger.setPassengerClass(PassengerClass.resolveFromCode(parts[1].strip()));
 		
-		System.out.println("La classe du passager :" + passengerClass);
-			
-		Double age = Double.valueOf(parts1[1].strip());
+		// Condition de vérifications si le champs age du fichier n'est pas vide.
+		// Si c'est le cas mettre une valeur négative pour démontrer qu'il y a une erreur.
+		// Sinon récupérer la valeur de la colonne.
+		Double age =  !"".equals(parts[2].strip()) ? Double.valueOf(parts[2].strip()) : -1.0;
+		passenger.setAge(age);
 		
-		PassengerSex sex = PassengerSex.resolveFromCode(parts1[3].strip());
-		Boolean survived = Boolean.valueOf(parts1[4].strip());
-
-		Passenger passenger = new Passenger(name, passengerClass, age, sex, survived);
-
+		passenger.setSex(PassengerSex.resolveFromCode(parts[3].strip()));
+		passenger.setSurvived(Boolean.valueOf(parts[4].strip()));
+		
 		return passenger;
 	}
 
