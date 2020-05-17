@@ -8,11 +8,17 @@ public class TestDMO2 {
 
 	public static void test() {
 		
+		Passenger passenger = new Passenger();
+		
 		PassengerSex sex = PassengerSex.MALE;
 		PassengerClass pClass = PassengerClass.FIRST;
-		
-		Passenger passenger1 = new Passenger("Abbing, Mr Anthony", pClass, 50.0, sex, true);
-		
-		System.out.println(passenger1.toString());
+				
+		passenger.setName("Abbing, Mr Anthony");
+		passenger.setPassengerClass(pClass);
+		passenger.setAge(50.0);
+		passenger.setSex(sex);
+		passenger.setSurvived(true);
+
+		System.out.println(passenger.toString());
 	}
 }

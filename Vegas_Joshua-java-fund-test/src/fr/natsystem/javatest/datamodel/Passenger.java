@@ -8,13 +8,6 @@ public class Passenger {
 	private PassengerSex sex;
 	private Boolean survived;
 	
-	public Passenger(String name, PassengerClass passengerClass, Double age, PassengerSex sex, Boolean survived) {
-		this.name = name;
-		this.passengerClass = passengerClass;
-		this.age = age;
-		this.sex = sex;
-		this.survived = survived;
-	}
 	
 
 	public String getName() {
