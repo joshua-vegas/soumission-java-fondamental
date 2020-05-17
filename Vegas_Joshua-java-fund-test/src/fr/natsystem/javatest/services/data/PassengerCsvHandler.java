@@ -62,7 +62,10 @@ public class PassengerCsvHandler {
 		passenger.setAge(age);
 		
 		passenger.setSex(PassengerSex.resolveFromCode(parts[3].strip()));
-		passenger.setSurvived(Boolean.valueOf(parts[4].strip()));
+		
+		String isNumberBoolean = parts[4].strip();
+		Boolean isSurvived = "1".equals(isNumberBoolean);
+		passenger.setSurvived(isSurvived);
 		
 		return passenger;
 	}

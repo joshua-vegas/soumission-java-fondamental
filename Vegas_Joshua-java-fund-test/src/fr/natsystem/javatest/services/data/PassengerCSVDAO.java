@@ -1,11 +1,16 @@
 package fr.natsystem.javatest.services.data;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import fr.natsystem.javatest.datamodel.Passenger;
@@ -36,7 +41,7 @@ public class PassengerCSVDAO {
 		lines.remove(0);
 		List<Passenger> passengers = new ArrayList<>();
 		for (String line : lines) {
-			Passenger passenger = PassengerCsvHandler.fromCSVLine(line);
+			Passenger passenger = PassengerCSVDAO.fromCSVLine(line);
 			passengers.add(passenger);
 		}
 		
@@ -61,8 +66,35 @@ public class PassengerCSVDAO {
 		passenger.setAge(age);
 		
 		passenger.setSex(PassengerSex.resolveFromCode(parts[3].strip()));
-		passenger.setSurvived(Boolean.valueOf(parts[4].strip()));
+		
+		// Modification de code pour répérer valeur booléene true ou false à partir de string qui ont pour valeur 0 ou 1.
+		// Exemple trouvés sur le site : https://memorynotfound.com/java-convert-string-to-boolean/
+		String isNumberBoolean = parts[4].strip();
+		Boolean isSurvived = "1".equals(isNumberBoolean);
+		passenger.setSurvived(isSurvived);
 		
 		return passenger;
+	}
+	
+	public static void writeAll(List<Passenger> passengers) throws FileNotFoundException {
+		
+		// Collections.rotate(passengers.subList(2, 4), -1);
+		
+		// Création d'un fichers s'il n'existe pas sinon écriture dans le fichier existant.
+		File file = new File("data_output.csv");
+
+		// ouverture du fichier en écriture (remplacement)
+		FileOutputStream outputStream = new FileOutputStream(file, false);
+		PrintWriter writer = new PrintWriter(outputStream, true); // true veut dire "auto-flush"
+		
+		writer.println("Pclass;Name;Sex;Age;Survived");
+		
+		// Boucle sur toutes les lignes des passagers avec modifications des emplacement pour les colonnes class, name ainsi que age et sex.
+		for (Passenger passenger : passengers) {
+			writer.println(passenger.getPassengerClass() + ";" + passenger.getName() + ";" + passenger.getSex() + ";" + passenger.getAge() + ";" + passenger.getSurvived());
+		}
+		
+		writer.close();
+		
 	}
 }
