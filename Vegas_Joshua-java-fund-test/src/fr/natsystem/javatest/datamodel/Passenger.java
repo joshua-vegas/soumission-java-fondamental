@@ -1,6 +1,6 @@
 package fr.natsystem.javatest.datamodel;
 
-public class Passenger {
+public class Passenger implements Comparable<Passenger> {
 	
 	private String name;
 	private PassengerClass passengerClass;
@@ -43,7 +43,12 @@ public class Passenger {
 	
 	@Override
 	public String toString() {
-		return "Passenger [name=" + name + ", survived =" + survived +"]";
+		return "Passenger [name=" + name + ", age : "+ age + ", survived =" + survived +"]";
+	}
+
+	@Override
+	public int compareTo(Passenger passenger) {
+		return this.age.compareTo(passenger.age);
 	}
 
 }
