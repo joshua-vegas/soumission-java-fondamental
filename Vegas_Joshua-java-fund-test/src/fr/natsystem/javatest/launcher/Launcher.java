@@ -13,8 +13,8 @@ public class Launcher {
 		// TestDMO2.test();
 		// TestSER1.test();
 		// TestSER2.test();
-		TestSER3.test();
-		// TestBLI1.test();
+		// TestSER3.test();
+		TestBLI1.test();
 
 	}
 

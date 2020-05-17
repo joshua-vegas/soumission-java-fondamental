@@ -24,9 +24,6 @@ public class TestSER1 {
 			System.out.println(e.getMessage());
 			return;
 		}
-			
-		//then : Affichage du second passager.
-		System.out.println(passengers.get(1));
 		
 		// Test complémentaire permettant de vérifier si le fichier à bien été chargé.
 		// 1313 étant le nombre de lignes compris dans le fichier Titanic.csv moins l'entête.
@@ -35,6 +32,10 @@ public class TestSER1 {
 		if (!success) {
 			System.out.println("une erreur est survenue pendant le chargement");
 		}
+			
+		//then : Affichage du second passager.
+		System.out.println(passengers.get(1));
+		
 	}
 
 }
